@@ -1,38 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
 //* grab input *//
 //* prevent default *//
-//* attach input to div to display on the DOM *//
+//* create html element li and delete button *//
+//* attach input to ul to display on the DOM *//
 
-let userInput = document.getElementById('new-task-description')
-const submitButton = document.getElementById('create-task-form')
-const taskList = document.getElementById('tasks')
-const priority = document.getElementById('priority-selector')
+  const taskForm = document.querySelector('#create-task-form')
+  const taskList = document.querySelector('#tasks')
 
-
-  submitButton.addEventListener('submit', function(event){
+  taskForm.addEventListener('submit', function(event){
     event.preventDefault()
-    
+    const newTask = document.querySelector('#new-task-description')
     const li = document.createElement('li')
     const deleteButton = document.createElement('button')
-    deleteButton.id = 'delete'
-    li.innerHTML = userInput.value
-    deleteButton.innerHTML = 'X'
+    const dueDate = document.querySelector('#due-date').value
+    // const editButton = document.createElement('button')
+    const prioritySelector = document.querySelector('#priority-selector').value
+
+    li.innerText = newTask.value
+    deleteButton.innerText = 'X'
+    // editButton.innerText = 'Edit'
     taskList.appendChild(li)
-    li.appendChild(deleteButton)
-    userInput.value = ''
-    
-    deleteButton.addEventListener('click', function(event){
-      event.target.parentNode.remove()
-    })
+    li.append(dueDate, deleteButton)
+    taskForm.reset()
 
-    if (priority.value === 'low'){
-      return li.style.color = "yellow"
-    } else if (priority.value === 'medium'){
-      return li.style.color = "green"
-    } else if (priority.value === 'high'){
-      return li.style.color = 'red'
+    if(prioritySelector === 'low'){
+      return li.style.color = '#d4ab33'
+    } else if (prioritySelector === 'medium'){
+      return li.style.color = '#389c2f'
+    } else if (prioritySelector === 'high'){
+      return li.style.color = '#d11f1f'
     }
+  
+  
+  });
 
+  taskList.addEventListener('click', function(event){
+    if (event.target.innerText === 'X')
+      event.target.parentElement.remove()
   });
 
 });
